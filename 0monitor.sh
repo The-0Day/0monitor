@@ -123,11 +123,8 @@ then
         then
                 echo "${GREEN}wget Already Insatalled"
                 echo "${WHITE}"
-                speedtest=$(cd ~ && wget -O speedtest-cli https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py)
-                cd ~ && chmod +x speedtest-cli
-                cd ~ && mv speedtest-cli speedtest
-                cd ~ && su -c "cp speedtest /usr/bin" root && echo "${GREEN}Dependency Install Successful" || echo "${RED}Installation Failed"
-                cd ~ && rm -r speedtest
+                speedtest=$(wget -O speedtest-cli https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py)
+                chmod +x speedtest-cli && echo "${GREEN}Dependency Install Successful" || echo "${RED}Installation Failed"
         else
                 echo "${RED}wget Is Not Installed, Please Install It"
         fi
@@ -201,7 +198,7 @@ then
 
 
         # Check Internet Speed
-        IS=$(speedtest > /tmp/speedtest_By_0monitor)
+        IS=$(./speedtest-cli > /tmp/speedtest_By_0monitor)
         DL=$(cat /tmp/speedtest_By_0monitor | sed -nE '/Download/s/^.*: //p')
         UL=$(cat /tmp/speedtest_By_0monitor | sed -nE '/Upload/s/^.*: //p')
         echo -e "${RED}Download :" $CONT $DL
